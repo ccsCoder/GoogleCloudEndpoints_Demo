@@ -100,7 +100,7 @@ public class BillEndpoint {
 	public Bill insertBill(Bill bill) {
 		PersistenceManager mgr = getPersistenceManager();
 		try {
-			if (bill.getBillID()!=null && containsBill(bill)) {
+			if (containsBill(bill)) {
 				throw new EntityExistsException("Object already exists");
 			}
 			mgr.makePersistent(bill);
@@ -153,7 +153,7 @@ public class BillEndpoint {
 		PersistenceManager mgr = getPersistenceManager();
 		boolean contains = true;
 		try {
-			mgr.getObjectById(Bill.class, bill.getBillID());
+			mgr.getObjectById(Bill.class, bill.getKey());
 		} catch (javax.jdo.JDOObjectNotFoundException ex) {
 			contains = false;
 		} finally {

@@ -6,96 +6,102 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
+import com.google.appengine.api.datastore.Key;
+
 @PersistenceCapable(identityType=IdentityType.APPLICATION)
 public class Course {
+	
 	@PrimaryKey
 	@Persistent(valueStrategy=IdGeneratorStrategy.IDENTITY)
-	Long courseID;
-	/**
-	 * @param courseID the courseID to set
-	 */
-	public void setCourseID(Long courseID) {
-		this.courseID = courseID;
-	}
-	/**
-	 * @param courseID
-	 * @param courseName
-	 * @param duration
-	 * @param cost
-	 */
-	public Course(Long courseID, String courseName, int duration, double cost) {
-		super();
-		this.courseID = courseID;
-		this.courseName = courseName;
-		this.duration = duration;
-		this.cost = cost;
-	}
-	@Persistent
-	String courseName;
-	@Persistent
-	int duration;
-	@Persistent
-	double cost;
+	private Key key;
 	
-	
-	
+	@Persistent
+	private String courseName;
+	@Persistent
+	private String shortCode;
+	@Persistent
+	private String description;
+	@Persistent
+	private double ratePerHour;
+	@Persistent
+	private int durationInHours;
 	/**
-	 * @return the courseID
+	 * @return the courseName
 	 */
-	public Long getCourseID() {
-		return courseID;
-	}
 	public String getCourseName() {
 		return courseName;
 	}
+	/**
+	 * @param courseName the courseName to set
+	 */
 	public void setCourseName(String courseName) {
 		this.courseName = courseName;
 	}
-	public int getDuration() {
-		return duration;
-	}
-	public void setDuration(int duration) {
-		this.duration = duration;
-	}
-	public double getCost() {
-		return cost;
-	}
-	public void setCost(double cost) {
-		this.cost = cost;
-	}
-	/* (non-Javadoc)
-	 * @see java.lang.Object#hashCode()
+	/**
+	 * @return the shortCode
 	 */
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result
-				+ ((courseName == null) ? 0 : courseName.hashCode());
-		result = prime * result + duration;
-		return result;
+	public String getShortCode() {
+		return shortCode;
 	}
-	/* (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
+	/**
+	 * @param shortCode the shortCode to set
 	 */
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (!(obj instanceof Course))
-			return false;
-		Course other = (Course) obj;
-		if (courseName == null) {
-			if (other.courseName != null)
-				return false;
-		} else if (!courseName.equals(other.courseName))
-			return false;
-		if (duration != other.duration)
-			return false;
-		return true;
+	public void setShortCode(String shortCode) {
+		this.shortCode = shortCode;
+	}
+	/**
+	 * @return the description
+	 */
+	public String getDescription() {
+		return description;
+	}
+	/**
+	 * @param description the description to set
+	 */
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	/**
+	 * @return the ratePerHour
+	 */
+	public double getRatePerHour() {
+		return ratePerHour;
+	}
+	/**
+	 * @param ratePerHour the ratePerHour to set
+	 */
+	public void setRatePerHour(double ratePerHour) {
+		this.ratePerHour = ratePerHour;
+	}
+	/**
+	 * @return the durationInHours
+	 */
+	public int getDurationInHours() {
+		return durationInHours;
+	}
+	/**
+	 * @param durationInHours the durationInHours to set
+	 */
+	public void setDurationInHours(int durationInHours) {
+		this.durationInHours = durationInHours;
+	}
+	/**
+	 * @return the key
+	 */
+	Key getKey() {
+		return key;
+	}
+	/**
+	 * @param key the key to set
+	 */
+	void setKey(Key key) {
+		this.key = key;
 	}
 	
 	
+	
+	
+	
+	
+
 }

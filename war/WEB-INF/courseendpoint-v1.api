@@ -133,18 +133,51 @@
         "id" : "Course",
         "type" : "object",
         "properties" : {
-          "courseID" : {
-            "type" : "string",
-            "format" : "int64"
+          "key" : {
+            "$ref" : "Key"
           },
           "courseName" : {
             "type" : "string"
           },
-          "duration" : {
-            "type" : "integer"
+          "shortCode" : {
+            "type" : "string"
           },
-          "cost" : {
+          "description" : {
+            "type" : "string"
+          },
+          "ratePerHour" : {
             "type" : "number"
+          },
+          "durationInHours" : {
+            "type" : "integer"
+          }
+        }
+      },
+      "Key" : {
+        "id" : "Key",
+        "type" : "object",
+        "properties" : {
+          "kind" : {
+            "type" : "string"
+          },
+          "appId" : {
+            "type" : "string"
+          },
+          "id" : {
+            "type" : "string",
+            "format" : "int64"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "parent" : {
+            "$ref" : "Key"
+          },
+          "complete" : {
+            "type" : "boolean"
+          },
+          "namespace" : {
+            "type" : "string"
           }
         }
       },

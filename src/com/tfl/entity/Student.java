@@ -6,132 +6,73 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
+import com.google.appengine.api.datastore.Key;
+
 @PersistenceCapable(identityType=IdentityType.APPLICATION)
 public class Student {
+	
 	@PrimaryKey
-	@Persistent(valueStrategy=IdGeneratorStrategy.IDENTITY)	
-	Long studentID;
+	@Persistent(valueStrategy=IdGeneratorStrategy.IDENTITY)
+	private Key key;
 	@Persistent
-	String studentName;
+	private String name;
 	@Persistent
-	String qualification;
+	private int age;
 	@Persistent
-	String address;
-	@Persistent
-	char gender;
+	private String lastQualification;
+	
+	
+	
 	/**
-	 * @param studentID
-	 * @param studentName
-	 * @param qualification
-	 * @param address
-	 * @param gender
+	 * @return the key
 	 */
-	public Student(Long studentID, String studentName, String qualification,
-			String address, char gender) {
-		super();
-		this.studentID = studentID;
-		this.studentName = studentName;
-		this.qualification = qualification;
-		this.address = address;
-		this.gender = gender;
+	Key getKey() {
+		return key;
 	}
 	/**
-	 * @return the studentID
+	 * @param key the key to set
 	 */
-	public Long getStudentID() {
-		return studentID;
+	void setKey(Key key) {
+		this.key = key;
 	}
 	/**
-	 * @param studentID the studentID to set
+	 * @return the name
 	 */
-	public void setStudentID(Long studentID) {
-		this.studentID = studentID;
+	public String getName() {
+		return name;
 	}
 	/**
-	 * @return the studentName
+	 * @param name the name to set
 	 */
-	public String getStudentName() {
-		return studentName;
+	public void setName(String name) {
+		this.name = name;
 	}
 	/**
-	 * @param studentName the studentName to set
+	 * @return the age
 	 */
-	public void setStudentName(String studentName) {
-		this.studentName = studentName;
+	public int getAge() {
+		return age;
 	}
 	/**
-	 * @return the qualification
+	 * @param age the age to set
 	 */
-	public String getQualification() {
-		return qualification;
+	public void setAge(int age) {
+		this.age = age;
 	}
 	/**
-	 * @param qualification the qualification to set
+	 * @return the lastQualification
 	 */
-	public void setQualification(String qualification) {
-		this.qualification = qualification;
+	public String getLastQualification() {
+		return lastQualification;
 	}
 	/**
-	 * @return the address
+	 * @param lastQualification the lastQualification to set
 	 */
-	public String getAddress() {
-		return address;
-	}
-	/**
-	 * @param address the address to set
-	 */
-	public void setAddress(String address) {
-		this.address = address;
-	}
-	/**
-	 * @return the gender
-	 */
-	public char getGender() {
-		return gender;
-	}
-	/**
-	 * @param gender the gender to set
-	 */
-	public void setGender(char gender) {
-		this.gender = gender;
-	}
-	/* (non-Javadoc)
-	 * @see java.lang.Object#hashCode()
-	 */
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result
-				+ ((studentID == null) ? 0 : studentID.hashCode());
-		result = prime * result
-				+ ((studentName == null) ? 0 : studentName.hashCode());
-		return result;
-	}
-	/* (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (!(obj instanceof Student))
-			return false;
-		Student other = (Student) obj;
-		if (studentID == null) {
-			if (other.studentID != null)
-				return false;
-		} else if (!studentID.equals(other.studentID))
-			return false;
-		if (studentName == null) {
-			if (other.studentName != null)
-				return false;
-		} else if (!studentName.equals(other.studentName))
-			return false;
-		return true;
+	public void setLastQualification(String lastQualification) {
+		this.lastQualification = lastQualification;
 	}
 	
-		
+	
+	
+	
 }

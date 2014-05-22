@@ -100,7 +100,7 @@ public class CourseEndpoint {
 	public Course insertCourse(Course course) {
 		PersistenceManager mgr = getPersistenceManager();
 		try {
-			if (course.getCourseID()!=null && containsCourse(course)) {
+			if (containsCourse(course)) {
 				throw new EntityExistsException("Object already exists");
 			}
 			mgr.makePersistent(course);
@@ -153,7 +153,7 @@ public class CourseEndpoint {
 		PersistenceManager mgr = getPersistenceManager();
 		boolean contains = true;
 		try {
-			mgr.getObjectById(Course.class, course.getCourseID());
+			mgr.getObjectById(Course.class, course.getKey());
 		} catch (javax.jdo.JDOObjectNotFoundException ex) {
 			contains = false;
 		} finally {

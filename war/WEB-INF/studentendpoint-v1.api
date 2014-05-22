@@ -133,20 +133,44 @@
         "id" : "Student",
         "type" : "object",
         "properties" : {
-          "studentID" : {
+          "key" : {
+            "$ref" : "Key"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "age" : {
+            "type" : "integer"
+          },
+          "lastQualification" : {
+            "type" : "string"
+          }
+        }
+      },
+      "Key" : {
+        "id" : "Key",
+        "type" : "object",
+        "properties" : {
+          "kind" : {
+            "type" : "string"
+          },
+          "appId" : {
+            "type" : "string"
+          },
+          "id" : {
             "type" : "string",
             "format" : "int64"
           },
-          "studentName" : {
+          "name" : {
             "type" : "string"
           },
-          "qualification" : {
-            "type" : "string"
+          "parent" : {
+            "$ref" : "Key"
           },
-          "address" : {
-            "type" : "string"
+          "complete" : {
+            "type" : "boolean"
           },
-          "gender" : {
+          "namespace" : {
             "type" : "string"
           }
         }
