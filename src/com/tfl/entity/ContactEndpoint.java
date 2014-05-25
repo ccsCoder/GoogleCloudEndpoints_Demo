@@ -19,8 +19,8 @@ import javax.persistence.EntityNotFoundException;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 
-@Api(name = "studentendpoint", namespace = @ApiNamespace(ownerDomain = "tfl.com", ownerName = "tfl.com", packagePath = "entity"))
-public class StudentEndpoint {
+@Api(name = "contactendpoint", namespace = @ApiNamespace(ownerDomain = "tfl.com", ownerName = "tfl.com", packagePath = "entity"))
+public class ContactEndpoint {
 
 	/**
 	 * This method lists all the entities inserted in datastore.
@@ -30,18 +30,18 @@ public class StudentEndpoint {
 	 * persisted and a cursor to the next page.
 	 */
 	@SuppressWarnings({ "unchecked", "unused" })
-	@ApiMethod(name = "listStudent")
-	public CollectionResponse<Student> listStudent(
+	@ApiMethod(name = "listContact")
+	public CollectionResponse<Contact> listContact(
 			@Nullable @Named("cursor") String cursorString,
 			@Nullable @Named("limit") Integer limit) {
 
 		PersistenceManager mgr = null;
 		Cursor cursor = null;
-		List<Student> execute = null;
+		List<Contact> execute = null;
 
 		try {
 			mgr = getPersistenceManager();
-			Query query = mgr.newQuery(Student.class);
+			Query query = mgr.newQuery(Contact.class);
 			if (cursorString != null && cursorString != "") {
 				cursor = Cursor.fromWebSafeString(cursorString);
 				HashMap<String, Object> extensionMap = new HashMap<String, Object>();
@@ -53,20 +53,20 @@ public class StudentEndpoint {
 				query.setRange(0, limit);
 			}
 
-			execute = (List<Student>) query.execute();
+			execute = (List<Contact>) query.execute();
 			cursor = JDOCursorHelper.getCursor(execute);
 			if (cursor != null)
 				cursorString = cursor.toWebSafeString();
 
 			// Tight loop for fetching all entities from datastore and accomodate
 			// for lazy fetch.
-			for (Student obj : execute)
+			for (Contact obj : execute)
 				;
 		} finally {
 			mgr.close();
 		}
 
-		return CollectionResponse.<Student> builder().setItems(execute)
+		return CollectionResponse.<Contact> builder().setItems(execute)
 				.setNextPageToken(cursorString).build();
 	}
 
@@ -76,16 +76,16 @@ public class StudentEndpoint {
 	 * @param id the primary key of the java bean.
 	 * @return The entity with primary key id.
 	 */
-	@ApiMethod(name = "getStudent")
-	public Student getStudent(@Named("id") Long id) {
+	@ApiMethod(name = "getContact")
+	public Contact getContact(@Named("id") String id) {
 		PersistenceManager mgr = getPersistenceManager();
-		Student student = null;
+		Contact contact = null;
 		try {
-			student = mgr.getObjectById(Student.class, id);
+			contact = mgr.getObjectById(Contact.class, id);
 		} finally {
 			mgr.close();
 		}
-		return student;
+		return contact;
 	}
 
 	/**
@@ -93,21 +93,21 @@ public class StudentEndpoint {
 	 * exists in the datastore, an exception is thrown.
 	 * It uses HTTP POST method.
 	 *
-	 * @param student the entity to be inserted.
+	 * @param contact the entity to be inserted.
 	 * @return The inserted entity.
 	 */
-	@ApiMethod(name = "insertStudent")
-	public Student insertStudent(Student student) {
+	@ApiMethod(name = "insertContact")
+	public Contact insertContact(Contact contact) {
 		PersistenceManager mgr = getPersistenceManager();
 		try {
-			if (student.getKey()!=null && containsStudent(student)) {
+			if (containsContact(contact)) {
 				throw new EntityExistsException("Object already exists");
 			}
-			mgr.makePersistent(student);
+			mgr.makePersistent(contact);
 		} finally {
 			mgr.close();
 		}
-		return student;
+		return contact;
 	}
 
 	/**
@@ -115,21 +115,21 @@ public class StudentEndpoint {
 	 * exist in the datastore, an exception is thrown.
 	 * It uses HTTP PUT method.
 	 *
-	 * @param student the entity to be updated.
+	 * @param contact the entity to be updated.
 	 * @return The updated entity.
 	 */
-	@ApiMethod(name = "updateStudent")
-	public Student updateStudent(Student student) {
+	@ApiMethod(name = "updateContact")
+	public Contact updateContact(Contact contact) {
 		PersistenceManager mgr = getPersistenceManager();
 		try {
-			if (!containsStudent(student)) {
+			if (!containsContact(contact)) {
 				throw new EntityNotFoundException("Object does not exist");
 			}
-			mgr.makePersistent(student);
+			mgr.makePersistent(contact);
 		} finally {
 			mgr.close();
 		}
-		return student;
+		return contact;
 	}
 
 	/**
@@ -138,22 +138,22 @@ public class StudentEndpoint {
 	 *
 	 * @param id the primary key of the entity to be deleted.
 	 */
-	@ApiMethod(name = "removeStudent")
-	public void removeStudent(@Named("id") Long id) {
+	@ApiMethod(name = "removeContact")
+	public void removeContact(@Named("id") String id) {
 		PersistenceManager mgr = getPersistenceManager();
 		try {
-			Student student = mgr.getObjectById(Student.class, id);
-			mgr.deletePersistent(student);
+			Contact contact = mgr.getObjectById(Contact.class, id);
+			mgr.deletePersistent(contact);
 		} finally {
 			mgr.close();
 		}
 	}
 
-	private boolean containsStudent(Student student) {
+	private boolean containsContact(Contact contact) {
 		PersistenceManager mgr = getPersistenceManager();
 		boolean contains = true;
 		try {
-			mgr.getObjectById(Student.class, student.getKey());
+			mgr.getObjectById(Contact.class, contact.getEmailID());
 		} catch (javax.jdo.JDOObjectNotFoundException ex) {
 			contains = false;
 		} finally {

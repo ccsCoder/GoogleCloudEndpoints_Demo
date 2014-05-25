@@ -100,8 +100,10 @@ public class BillEndpoint {
 	public Bill insertBill(Bill bill) {
 		PersistenceManager mgr = getPersistenceManager();
 		try {
-			if (containsBill(bill)) {
-				throw new EntityExistsException("Object already exists");
+			if(bill.getKey()!=null) {
+				if (containsBill(bill)) {
+					throw new EntityExistsException("Object already exists");
+				}
 			}
 			mgr.makePersistent(bill);
 		} finally {

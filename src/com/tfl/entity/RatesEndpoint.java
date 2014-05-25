@@ -19,8 +19,8 @@ import javax.persistence.EntityNotFoundException;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 
-@Api(name = "courseendpoint", namespace = @ApiNamespace(ownerDomain = "tfl.com", ownerName = "tfl.com", packagePath = "entity"))
-public class CourseEndpoint {
+@Api(name = "ratesendpoint", namespace = @ApiNamespace(ownerDomain = "tfl.com", ownerName = "tfl.com", packagePath = "entity"))
+public class RatesEndpoint {
 
 	/**
 	 * This method lists all the entities inserted in datastore.
@@ -30,18 +30,18 @@ public class CourseEndpoint {
 	 * persisted and a cursor to the next page.
 	 */
 	@SuppressWarnings({ "unchecked", "unused" })
-	@ApiMethod(name = "listCourse")
-	public CollectionResponse<Course> listCourse(
+	@ApiMethod(name = "listRates")
+	public CollectionResponse<Rates> listRates(
 			@Nullable @Named("cursor") String cursorString,
 			@Nullable @Named("limit") Integer limit) {
 
 		PersistenceManager mgr = null;
 		Cursor cursor = null;
-		List<Course> execute = null;
+		List<Rates> execute = null;
 
 		try {
 			mgr = getPersistenceManager();
-			Query query = mgr.newQuery(Course.class);
+			Query query = mgr.newQuery(Rates.class);
 			if (cursorString != null && cursorString != "") {
 				cursor = Cursor.fromWebSafeString(cursorString);
 				HashMap<String, Object> extensionMap = new HashMap<String, Object>();
@@ -53,20 +53,20 @@ public class CourseEndpoint {
 				query.setRange(0, limit);
 			}
 
-			execute = (List<Course>) query.execute();
+			execute = (List<Rates>) query.execute();
 			cursor = JDOCursorHelper.getCursor(execute);
 			if (cursor != null)
 				cursorString = cursor.toWebSafeString();
 
 			// Tight loop for fetching all entities from datastore and accomodate
 			// for lazy fetch.
-			for (Course obj : execute)
+			for (Rates obj : execute)
 				;
 		} finally {
 			mgr.close();
 		}
 
-		return CollectionResponse.<Course> builder().setItems(execute)
+		return CollectionResponse.<Rates> builder().setItems(execute)
 				.setNextPageToken(cursorString).build();
 	}
 
@@ -76,16 +76,16 @@ public class CourseEndpoint {
 	 * @param id the primary key of the java bean.
 	 * @return The entity with primary key id.
 	 */
-	@ApiMethod(name = "getCourse")
-	public Course getCourse(@Named("id") Long id) {
+	@ApiMethod(name = "getRates")
+	public Rates getRates(@Named("id") String id) {
 		PersistenceManager mgr = getPersistenceManager();
-		Course course = null;
+		Rates rates = null;
 		try {
-			course = mgr.getObjectById(Course.class, id);
+			rates = mgr.getObjectById(Rates.class, id);
 		} finally {
 			mgr.close();
 		}
-		return course;
+		return rates;
 	}
 
 	/**
@@ -93,21 +93,21 @@ public class CourseEndpoint {
 	 * exists in the datastore, an exception is thrown.
 	 * It uses HTTP POST method.
 	 *
-	 * @param course the entity to be inserted.
+	 * @param rates the entity to be inserted.
 	 * @return The inserted entity.
 	 */
-	@ApiMethod(name = "insertCourse")
-	public Course insertCourse(Course course) {
+	@ApiMethod(name = "insertRates")
+	public Rates insertRates(Rates rates) {
 		PersistenceManager mgr = getPersistenceManager();
 		try {
-			if (containsCourse(course)) {
+			if (containsRates(rates)) {
 				throw new EntityExistsException("Object already exists");
 			}
-			mgr.makePersistent(course);
+			mgr.makePersistent(rates);
 		} finally {
 			mgr.close();
 		}
-		return course;
+		return rates;
 	}
 
 	/**
@@ -115,21 +115,21 @@ public class CourseEndpoint {
 	 * exist in the datastore, an exception is thrown.
 	 * It uses HTTP PUT method.
 	 *
-	 * @param course the entity to be updated.
+	 * @param rates the entity to be updated.
 	 * @return The updated entity.
 	 */
-	@ApiMethod(name = "updateCourse")
-	public Course updateCourse(Course course) {
+	@ApiMethod(name = "updateRates")
+	public Rates updateRates(Rates rates) {
 		PersistenceManager mgr = getPersistenceManager();
 		try {
-			if (!containsCourse(course)) {
+			if (!containsRates(rates)) {
 				throw new EntityNotFoundException("Object does not exist");
 			}
-			mgr.makePersistent(course);
+			mgr.makePersistent(rates);
 		} finally {
 			mgr.close();
 		}
-		return course;
+		return rates;
 	}
 
 	/**
@@ -138,22 +138,22 @@ public class CourseEndpoint {
 	 *
 	 * @param id the primary key of the entity to be deleted.
 	 */
-	@ApiMethod(name = "removeCourse")
-	public void removeCourse(@Named("id") Long id) {
+	@ApiMethod(name = "removeRates")
+	public void removeRates(@Named("id") String id) {
 		PersistenceManager mgr = getPersistenceManager();
 		try {
-			Course course = mgr.getObjectById(Course.class, id);
-			mgr.deletePersistent(course);
+			Rates rates = mgr.getObjectById(Rates.class, id);
+			mgr.deletePersistent(rates);
 		} finally {
 			mgr.close();
 		}
 	}
 
-	private boolean containsCourse(Course course) {
+	private boolean containsRates(Rates rates) {
 		PersistenceManager mgr = getPersistenceManager();
 		boolean contains = true;
 		try {
-			mgr.getObjectById(Course.class, course.getKey());
+			mgr.getObjectById(Rates.class, rates.getRateType());
 		} catch (javax.jdo.JDOObjectNotFoundException ex) {
 			contains = false;
 		} finally {
