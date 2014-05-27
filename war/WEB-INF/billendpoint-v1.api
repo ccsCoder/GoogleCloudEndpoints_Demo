@@ -68,22 +68,6 @@
         "body" : "autoTemplate(backendResponse)"
       }
     },
-    "billendpoint.insertBill" : {
-      "path" : "bill",
-      "httpMethod" : "POST",
-      "authLevel" : "NONE",
-      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
-      "audiences" : [ ],
-      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "com.tfl.entity.BillEndpoint.insertBill",
-      "request" : {
-        "body" : "autoTemplate(backendRequest)",
-        "bodyName" : "resource"
-      },
-      "response" : {
-        "body" : "autoTemplate(backendResponse)"
-      }
-    },
     "billendpoint.removeBill" : {
       "path" : "bill/{id}",
       "httpMethod" : "DELETE",
@@ -103,6 +87,22 @@
       },
       "response" : {
         "body" : "empty"
+      }
+    },
+    "billendpoint.insertBill" : {
+      "path" : "bill",
+      "httpMethod" : "POST",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.tfl.entity.BillEndpoint.insertBill",
+      "request" : {
+        "body" : "autoTemplate(backendRequest)",
+        "bodyName" : "resource"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
       }
     },
     "billendpoint.getBill" : {
@@ -136,11 +136,29 @@
           "key" : {
             "$ref" : "Key"
           },
-          "enrollments" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "Enrollment"
-            }
+          "jobDescription" : {
+            "type" : "string"
+          },
+          "numberOfHours" : {
+            "type" : "integer"
+          },
+          "payableTo" : {
+            "type" : "string"
+          },
+          "finalAmount" : {
+            "type" : "number"
+          },
+          "billGeneratedBy" : {
+            "type" : "string"
+          },
+          "billDate" : {
+            "type" : "string"
+          },
+          "contact" : {
+            "$ref" : "Contact"
+          },
+          "rate" : {
+            "$ref" : "Rates"
           }
         }
       },
@@ -164,71 +182,53 @@
           "parent" : {
             "$ref" : "Key"
           },
-          "complete" : {
-            "type" : "boolean"
-          },
           "namespace" : {
             "type" : "string"
+          },
+          "complete" : {
+            "type" : "boolean"
           }
         }
       },
-      "Enrollment" : {
-        "id" : "Enrollment",
+      "Contact" : {
+        "id" : "Contact",
         "type" : "object",
         "properties" : {
-          "key" : {
-            "$ref" : "Key"
-          },
-          "student" : {
-            "$ref" : "Student"
-          },
-          "courses" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "Course"
-            }
-          }
-        }
-      },
-      "Student" : {
-        "id" : "Student",
-        "type" : "object",
-        "properties" : {
-          "key" : {
-            "$ref" : "Key"
-          },
-          "name" : {
+          "emailID" : {
             "type" : "string"
           },
-          "age" : {
-            "type" : "integer"
+          "contactName" : {
+            "type" : "string"
           },
-          "lastQualification" : {
+          "address" : {
+            "type" : "string"
+          },
+          "companyName" : {
             "type" : "string"
           }
         }
       },
-      "Course" : {
-        "id" : "Course",
+      "Rates" : {
+        "id" : "Rates",
         "type" : "object",
         "properties" : {
-          "key" : {
-            "$ref" : "Key"
-          },
-          "courseName" : {
+          "rateType" : {
             "type" : "string"
           },
-          "shortCode" : {
+          "customerCurrencyCode" : {
             "type" : "string"
           },
-          "description" : {
+          "nativeCurrencyCode" : {
             "type" : "string"
           },
-          "ratePerHour" : {
+          "hourlyRate" : {
             "type" : "number"
           },
-          "durationInHours" : {
-            "type" : "integer"
+          "taxPercentage" : {
+            "type" : "number"
+          },
+          "conversionRate" : {
+            "type" : "number"
           }
         }
       },
@@ -262,6 +262,8 @@
           "$ref" : "CollectionResponse_Bill"
         }
       },
+      "com.tfl.entity.BillEndpoint.removeBill" : {
+      },
       "com.tfl.entity.BillEndpoint.insertBill" : {
         "request" : {
           "$ref" : "Bill"
@@ -269,8 +271,6 @@
         "response" : {
           "$ref" : "Bill"
         }
-      },
-      "com.tfl.entity.BillEndpoint.removeBill" : {
       },
       "com.tfl.entity.BillEndpoint.getBill" : {
         "response" : {

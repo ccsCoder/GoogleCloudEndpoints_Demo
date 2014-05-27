@@ -15,7 +15,7 @@
   <servlet-class>com.google.api.server.spi.SystemServiceServlet</servlet-class>
   <init-param>
    <param-name>services</param-name>
-   <param-value>com.tfl.entity.BillEndpoint,com.tfl.entity.CourseEndpoint,com.tfl.entity.EnrollmentEndpoint,com.tfl.entity.StudentEndpoint</param-value>
+   <param-value>com.tfl.entity.BillEndpoint,com.tfl.entity.ContactEndpoint,com.tfl.entity.RatesEndpoint</param-value>
   </init-param>
  </servlet>
  <servlet-mapping>
