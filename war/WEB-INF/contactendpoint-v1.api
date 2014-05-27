@@ -43,6 +43,22 @@
         "body" : "autoTemplate(backendResponse)"
       }
     },
+    "contactendpoint.insertContact" : {
+      "path" : "contact",
+      "httpMethod" : "POST",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.tfl.entity.ContactEndpoint.insertContact",
+      "request" : {
+        "body" : "autoTemplate(backendRequest)",
+        "bodyName" : "resource"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
     "contactendpoint.removeContact" : {
       "path" : "contact/{id}",
       "httpMethod" : "DELETE",
@@ -62,22 +78,6 @@
       },
       "response" : {
         "body" : "empty"
-      }
-    },
-    "contactendpoint.insertContact" : {
-      "path" : "contact",
-      "httpMethod" : "POST",
-      "authLevel" : "NONE",
-      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
-      "audiences" : [ ],
-      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "com.tfl.entity.ContactEndpoint.insertContact",
-      "request" : {
-        "body" : "autoTemplate(backendRequest)",
-        "bodyName" : "resource"
-      },
-      "response" : {
-        "body" : "autoTemplate(backendResponse)"
       }
     },
     "contactendpoint.getContact" : {
@@ -172,8 +172,6 @@
           "$ref" : "Contact"
         }
       },
-      "com.tfl.entity.ContactEndpoint.removeContact" : {
-      },
       "com.tfl.entity.ContactEndpoint.insertContact" : {
         "request" : {
           "$ref" : "Contact"
@@ -181,6 +179,8 @@
         "response" : {
           "$ref" : "Contact"
         }
+      },
+      "com.tfl.entity.ContactEndpoint.removeContact" : {
       },
       "com.tfl.entity.ContactEndpoint.getContact" : {
         "response" : {
