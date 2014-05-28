@@ -49,9 +49,23 @@
 						<button type="button" id="listContactsButton" class="css3button">List all Contacts &Gt;</button>
 					</div>
 					<p></p>
+					<ul class="dataList">
+					</ul>
 					<p>Or Optionally you may want to ...</p>
 					<div class="container">
 						<button type="button" id="createNewContactButton" class="css3button">Create a New Contact &Gt;</button>
+					</div>
+					<div class="hiddenForm" id="hiddenContactForm">
+						<div><input type="email" id="contact_email" placeholder="email address"/> </div>
+						<div><input type="text" id="contact_name" placeholder="Name"/> </div>
+						<div><input type="text" id="contact_company" placeholder="Company Name"/> </div>
+						<div><input type="text" id="contact_address" placeholder="Mailing Address"/> </div>
+						<div style="float:right;margin-top:5px">
+							<button type="button" id="saveContact" class="css3button" style="padding:5px">Save</button>
+							<button type="button" id="cancelContact" class="css3button" style="padding:5px">Cancel</button>
+						</div>
+					</div>
+					<div class="hiddenMessage" id="hiddenContactMessage">
 					</div>
 			</div>
 		  </div>
@@ -72,6 +86,7 @@
 				<div class="entry">
 					<button type="button" name="" value="" class="css3button">See all Past Bills &Gt;</button>
 					<p></p>
+					
 					<p>Or Optionally you may want to ...</p>
 					<button type="button" name="" value="" class="css3button">Generate a New Bill &Gt;</button>
 			  </div>
@@ -124,5 +139,7 @@
 		<p>Copyright (c) 2014 www.technoflairlab.com All rights reserved. With Thanks, template from: <a href="http://www.freecsstemplates.org">FCT</a>.</p>
 	</div>
 	<!-- end #footer -->
+	<script type="text/javascript" src="https://apis.google.com/js/client.js?onload=init"></script>
+	
 </body>
 </html>

@@ -306,6 +306,86 @@ hr { display: none; }
 	color: #961A06;
 }
 
+.hiddenForm,.hiddenMessage {
+
+
+	border-radius:5px;
+	display:none;
+	padding:20px;
+	margin-top:20px;
+	
+}
+
+.hiddenMessage {
+	font-size:larger;
+	font-weight:bold;
+	font-style:italic;
+}
+
+.hiddenForm div {
+	padding-left: 30px;
+	
+}
+
+.hiddenForm div input {
+	font-size:larger;
+	border:1 px solid gainsboro;
+	width:80%;
+	height: 30px;
+	margin-top: 10px;
+	text-align:center;
+}
+
+.dataList {
+	margin-left:20px;
+	font-size:larger;
+	line-height:150%;
+}
+
+.dataList li {
+	margin-top:4px;
+	background-color:beige;
+	border:1px solid beige;
+	border-radius:5px;
+}
+
+.dataList li:hover {
+	background-color:ghostwhite;
+	border: 1px solid ghostwhite;
+	cursor:pointer;
+}
+
+.dataList li div.addressContainer {
+	padding: 5px;
+	padding-left:30px;
+}
+
+.dataList li div.addressContainer > .name {
+	font-weight:bold;
+	font-size:larger;
+	
+}
+
+.dataList li div.addressContainer > .email {
+	text-decoration:underline;
+	font-style:italic;
+	font-size:smaller;
+	
+}
+
+.dataList li div.addressContainer > .companyName {
+	font-style:italic;
+	font-size:smaller;
+	
+}
+
+.dataList li div.addressContainer > .mailingAddress {
+	font-style:italic;
+	font-size:smaller;
+	
+}
+
+
 /* Sidebar */
 
 #sidebar {
@@ -473,7 +553,7 @@ button.css3button {
 	-moz-border-radius: 10px;
 	-webkit-border-radius: 10px;
 	border-radius: 10px;
-	border: 2px solid #edebe4;
+	/*border: 2px solid #edebe4;*/
 	-moz-box-shadow:
 		1px 2px 3px rgba(000,000,000,0.5),
 		inset 0px 0px 3px rgba(255,255,255,1);
@@ -519,3 +599,4 @@ button.css3button:hover {
     max-widht:39px;
     opacity:1;
 }
+
