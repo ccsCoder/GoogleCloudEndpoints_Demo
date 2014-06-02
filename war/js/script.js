@@ -12,12 +12,55 @@ function init() {
          console.log("Loaded endpoints...");
          
          $(document).ready(function() {
-          	//attach click listeners.
+          	//attach click listeners for Contacts
            	$("#listContactsButton").on("click",showAllContacts);
            	$("#createNewContactButton").on("click",createNewContact);
+           	//sidebar - contacts
+           	$("#contactSidebar").find("a").on("click",handleContactSidebarActions);
          });
 }
 
+/**
+ * contact sidebar actions
+ */
+
+function handleContactSidebarActions(event) {
+	console.debug(event.target.text);
+	if (event.target.text=="View all Contacts") {
+		showAllContacts();
+	}
+	else if (event.target.text=="Search for a Contact") {
+		searchContact();
+	}
+	else if (event.target.text=="Edit a Contact") {
+		updateContact();
+	}
+	else if (event.target.text=="Remove a Contact") {
+		removeContact();
+	}
+	
+}
+
+function searchContact() {
+		$("#contactSearchForm").fadeIn("fast");
+		$("#contactSearchForm #contact_email").focus();
+		$("#contactSearchForm #searchContact").off();
+		$("#contactSearchForm #searchContact").on("click",function(e) {
+			var searchEmail = $("#contactSearchForm #contact_email").val();
+			if(!searchEmail || searchEmail==undefined || searchEmail=="") {
+				return;
+			}
+			//Build the Request Object
+		    var requestData = {};
+		    requestData.id = searchEmail;
+		    gapi.client.contactendpoint.getContact(requestData).execute(function(response) {
+		    	console.debug(response);
+		    	//call method that displays the contacts in a pretty fashion
+				displayContacts(response);
+				$("#contactSearchForm").fadeOut("fast");
+		    });
+		});
+}
 
 /**
  * function to show the Loading animation
@@ -99,24 +142,33 @@ function showAllContacts(event) {
 	showLoader($("#listContactsButton"));
 	gapi.client.contactendpoint.listContact().execute(function(response) {
 //		console.debug(response);
-		var resultHTML="";
-		if(!response.items || response.items==undefined) {
-			resultHTML="<li>No Contacts yet, Why don't you create one?</li>";
-		}
-		else {
-			for(var i=0;i<response.items.length;i++) {
-				resultHTML+="<li><div class='addressContainer'>" +
-				"<div class='name'>"+response.items[i].contactName+" </div>" +
-				"<div class='email'>"+response.items[i].emailID+"</div>" +
-				"<div class='companyName'>"	+response.items[i].companyName+"</div>"+
-				"<div class='mailingAddress'>"+response.items[i].address+"</div>" +
-				"</div></li>";
-				
-			}
-		}
-		$("#listContactsButton").parent().siblings(".dataList").html(resultHTML);
+		//call method that displays the contacts in a pretty fashion
+		displayContacts(response);
 		//now remove the indicator.
 		hideLoader();
 	});
 	
+}
+
+/**
+ * function to display the contacts ( searched ) in a pretty fashion.
+ * @param response
+ */
+function displayContacts(response) {
+	var resultHTML="";
+	if(!response.items || response.items==undefined) {
+		resultHTML="<li>No Contacts yet, Why don't you create one?</li>";
+	}
+	else {
+		for(var i=0;i<response.items.length;i++) {
+			resultHTML+="<li><div class='addressContainer'>" +
+			"<div class='name'>"+response.items[i].contactName+" </div>" +
+			"<div class='email'>"+response.items[i].emailID+"</div>" +
+			"<div class='companyName'>"	+response.items[i].companyName+"</div>"+
+			"<div class='mailingAddress'>"+response.items[i].address+"</div>" +
+			"</div></li>";
+			
+		}
+	}
+	$("#listContactsButton").parent().siblings(".dataList").html(resultHTML);
 }

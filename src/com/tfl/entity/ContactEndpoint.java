@@ -1,14 +1,18 @@
 package com.tfl.entity;
 
 import com.tfl.entity.PMF;
-
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiNamespace;
 import com.google.api.server.spi.response.CollectionResponse;
 import com.google.appengine.api.datastore.Cursor;
+import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.datanucleus.query.JDOCursorHelper;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 
@@ -78,10 +82,16 @@ public class ContactEndpoint {
 	 */
 	@ApiMethod(name = "getContact")
 	public Contact getContact(@Named("id") String id) {
+		
 		PersistenceManager mgr = getPersistenceManager();
 		Contact contact = null;
 		try {
-			contact = mgr.getObjectById(Contact.class, id);
+			System.out.println("*id="+id+" After Decoding="+URLDecoder.decode(id, "UTF-8"));
+			Key key = KeyFactory.createKey(Contact.class.getSimpleName(), URLDecoder.decode(id, "UTF-8"));
+			contact = mgr.getObjectById(Contact.class, KeyFactory.keyToString(key));
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		} finally {
 			mgr.close();
 		}

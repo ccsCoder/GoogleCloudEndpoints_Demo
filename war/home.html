@@ -100,25 +100,20 @@
 					<p>Use the Menu Options below for quick access to tasks...</p>
 				</li>
 				<li>
-					<h2>Bills</h2>
-					<ul>
-						<li><a href="#">View Past Bills</a></li>
-						<li><a href="#">View Bills by Contact</a></li>
-						<li><a href="#">View Bills by Date</a></li>
-						<li><a href="#">Generate a new Bill</a></li>
-						<li><a href="#">Purge(Permanently Delete) a Bill</a></li>
-					</ul>
-				</li>
-				<li>
 					<h2>Contacts</h2>
-					<ul>
-						<li><a href="#">View All Contacts</a></li>
-						<li><a href="#">Search for a Contact</a></li>
-						<li><a href="#">Edit a Contact</a></li>
-						<li><a href="#">Remove a Contact</a></li>
+					<ul id="contactSidebar">
+						<li><a href="#contactSidebar">View All Contacts</a></li>
+						<li><a href="#contactSidebar">Search for a Contact</a></li>
+						<li id="contactSearchForm" style="display:none">
+							<input type="email" id="contact_email" placeholder="email address"/>
+							<button type="button" id="searchContact" class="css3button" style="padding:5px">Search</button>
+						</li>
+						<li><a href="#contactSidebar">Edit a Contact</a></li>
+						<li><a href="#contactSidebar">Remove a Contact</a></li>
 					</ul>
 					
 				</li>
+				
 				<li>
 					<h2>Rates</h2>
 					<ul>
@@ -129,6 +124,18 @@
 					</ul>
 					
 				</li>
+				
+				<li>
+					<h2>Bills</h2>
+					<ul>
+						<li><a href="#">View Past Bills</a></li>
+						<li><a href="#">View Bills by Contact</a></li>
+						<li><a href="#">View Bills by Date</a></li>
+						<li><a href="#">Generate a new Bill</a></li>
+						<li><a href="#">Purge(Permanently Delete) a Bill</a></li>
+					</ul>
+				</li>
+				
 			</ul>
 		</div>
 		<!-- end #sidebar -->

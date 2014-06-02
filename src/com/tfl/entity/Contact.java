@@ -28,12 +28,14 @@ public class Contact {
 	 * @return the emailID
 	 */
 	public String getEmailID() {
+		//TODO: Implement workaround to get rid of the @ parsing issue.
 		return emailID;
 	}
 	/**
 	 * @param emailID the emailID to set
 	 */
 	public void setEmailID(String emailID) {
+		//TODO: Implement workaround to get rid of the @ parsing issue.
 		this.emailID = emailID;
 	}
 	/**
