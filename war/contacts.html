@@ -20,22 +20,14 @@
 	<div id="header">
 		<div id="menu">
 			<ul>
-				<li><a href="#" class="first">Home</a></li>
-				<!-- <li class="current_page_item"><a href="#">Blog</a></li>
-				<li><a href="#">About</a></li>
-				<li><a href="#">Contact</a></li> -->
+				<li><a href="contacts.html" class="first current_page_item">Contacts</a></li>
+				<li><a href="rates.html">Rates</a></li>
+				<li><a href="bills.html">Bills</a></li>
+				
 			</ul>
 		</div>
 		<!-- end #menu -->
-		<!-- <div id="search">
-			<form method="get" action="">
-				<fieldset>
-				<input type="text" name="s" id="search-text" size="15" />
-				<input type="submit" id="search-submit" value="GO" />
-				</fieldset>
-			</form>
-		</div> -->
-		<!-- end #search -->
+		
 	</div>
 	<!-- end #header -->
 	<!-- end #header-wrapper -->
@@ -46,14 +38,14 @@
 				<p class="meta"><em>List/Create/Modify your contacts...</em></p>
 				<div class="entry">
 					<div class="container">
-						<button type="button" id="listContactsButton" class="css3button">List all Contacts &Gt;</button>
+						<span id="listContactsButton" class="myButton">List all Contacts &Gt;</span>
 					</div>
 					<p></p>
 					<ul class="dataList">
 					</ul>
 					<p>Or Optionally you may want to ...</p>
 					<div class="container">
-						<button type="button" id="createNewContactButton" class="css3button">Create a New Contact &Gt;</button>
+						<span id="createNewContactButton" class="myButton">Create a New Contact &Gt;</s>
 					</div>
 					<div class="hiddenForm" id="hiddenContactForm">
 						<div><input type="email" id="contact_email" placeholder="email address"/> </div>
@@ -61,37 +53,15 @@
 						<div><input type="text" id="contact_company" placeholder="Company Name"/> </div>
 						<div><input type="text" id="contact_address" placeholder="Mailing Address"/> </div>
 						<div style="float:right;margin-top:5px">
-							<button type="button" id="saveContact" class="css3button" style="padding:5px">Save</button>
-							<button type="button" id="cancelContact" class="css3button" style="padding:5px">Cancel</button>
+							<button type="button" id="saveContact" class="myButton" ">Save</button>
+							<button type="button" id="cancelContact" class="myButton" >Cancel</button>
 						</div>
 					</div>
 					<div class="hiddenMessage" id="hiddenContactMessage">
 					</div>
 			</div>
 		  </div>
-			<div class="post">
-				<h2 class="title"><a href="#">Rates</a></h2>
-				<p class="meta"><em>List/Create/Modify your Rates...</em></p>
-				<div class="entry">
-					<button type="button" name="" value="" class="css3button">List all Rates &Gt;</button>
-					<p></p>
-					<p>Or Optionally you may want to ...</p>
-					<button type="button" name="" value="" class="css3button">Create a New Rate &Gt;</button>
-				</div>
-					
-			</div>
-			<div class="post">
-				<h2 class="title"><a href="#">Bills</a></h2>
-				<p class="meta"><em>Generate/View/Print a new Bill or Previous Bills...</em></p>
-				<div class="entry">
-					<button type="button" name="" value="" class="css3button">See all Past Bills &Gt;</button>
-					<p></p>
-					
-					<p>Or Optionally you may want to ...</p>
-					<button type="button" name="" value="" class="css3button">Generate a New Bill &Gt;</button>
-			  </div>
-					
-			</div>
+			
 		</div><!-- end #content -->
 		<div id="sidebar">
 			<ul>
@@ -102,39 +72,20 @@
 				<li>
 					<h2>Contacts</h2>
 					<ul id="contactSidebar">
-						<li><a href="#contactSidebar">View All Contacts</a></li>
-						<li><a href="#contactSidebar">Search for a Contact</a></li>
+						<li><a>View All Contacts</a></li>
+						<li><a>Search for a Contact</a></li>
 						<li id="contactSearchForm" style="display:none">
 							<input type="email" id="contact_email" placeholder="email address"/>
-							<button type="button" id="searchContact" class="css3button" style="padding:5px">Search</button>
+							<span id="searchContact" class="myButton">Go</span>
+							
 						</li>
-						<li><a href="#contactSidebar">Edit a Contact</a></li>
-						<li><a href="#contactSidebar">Remove a Contact</a></li>
+						<li><a>Edit a Contact</a></li>
+						<li><a>Remove a Contact</a></li>
 					</ul>
 					
 				</li>
 				
-				<li>
-					<h2>Rates</h2>
-					<ul>
-						<li><a href="#">View All Rates</a></li>
-						<li><a href="#">View All Rates for a Currency Code</a></li>
-						<li><a href="#">Edit a Rate</a></li>
-						<li><a href="#">Remove a Rate</a></li>
-					</ul>
-					
-				</li>
 				
-				<li>
-					<h2>Bills</h2>
-					<ul>
-						<li><a href="#">View Past Bills</a></li>
-						<li><a href="#">View Bills by Contact</a></li>
-						<li><a href="#">View Bills by Date</a></li>
-						<li><a href="#">Generate a new Bill</a></li>
-						<li><a href="#">Purge(Permanently Delete) a Bill</a></li>
-					</ul>
-				</li>
 				
 			</ul>
 		</div>

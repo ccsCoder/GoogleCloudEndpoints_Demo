@@ -26,8 +26,9 @@ function init() {
 
 function handleContactSidebarActions(event) {
 	console.debug(event.target.text);
-	if (event.target.text=="View all Contacts") {
-		showAllContacts();
+	if (event.target.text=="View All Contacts") {
+		console.log("In View AllContacts");
+		showAllContacts(event);
 	}
 	else if (event.target.text=="Search for a Contact") {
 		searchContact();
@@ -42,7 +43,11 @@ function handleContactSidebarActions(event) {
 }
 
 function searchContact() {
-		$("#contactSearchForm").fadeIn("fast");
+		if ($("#contactSearchForm").css("display")!="none") {
+			$("#contactSearchForm").slideUp("fast");
+			return;
+		}
+		$("#contactSearchForm").slideDown("fast");
 		$("#contactSearchForm #contact_email").focus();
 		$("#contactSearchForm #searchContact").off();
 		$("#contactSearchForm #searchContact").on("click",function(e) {
@@ -56,7 +61,7 @@ function searchContact() {
 		    gapi.client.contactendpoint.getContact(requestData).execute(function(response) {
 		    	console.debug(response);
 		    	//call method that displays the contacts in a pretty fashion
-				displayContacts(response);
+		    	displaySearchedContacts(response);
 				$("#contactSearchForm").fadeOut("fast");
 		    });
 		});
@@ -84,7 +89,9 @@ function hideLoader() {
 
 function createNewContact(event) {
 	$("#hiddenContactMessage").hide();
-	$("#hiddenContactForm").slideDown("slow");
+	$("#hiddenContactForm").slideDown("slow",function(e) {
+		$("#contact_email").focus();
+	});
 	
 	//add event to the Cancel thingy.
 	$("#hiddenContactForm").find("#cancelContact").off();//remove existing event(s).
@@ -139,6 +146,7 @@ function saveNewContact () {
 }
 
 function showAllContacts(event) {
+	console.debug(event);
 	showLoader($("#listContactsButton"));
 	gapi.client.contactendpoint.listContact().execute(function(response) {
 //		console.debug(response);
@@ -147,6 +155,25 @@ function showAllContacts(event) {
 		//now remove the indicator.
 		hideLoader();
 	});
+	
+}
+
+function displaySearchedContacts(response) {
+	var resultHTML="";
+	if(response.error || response.error!=undefined) {
+		resultHTML="<li>Cannot Find anyone with this Email ID...!</li>";
+		$("#listContactsButton").parent().siblings(".dataList").html(resultHTML);
+		return;
+	}
+	
+	resultHTML+="<li><div class='addressContainer'>" +
+	"<div class='name'>"+response.contactName+" </div>" +
+	"<div class='email'>"+response.emailID+"</div>" +
+	"<div class='companyName'>"	+response.companyName+"</div>"+
+	"<div class='mailingAddress'>"+response.address+"</div>" +
+	"</div></li>";
+	
+	$("#listContactsButton").parent().siblings(".dataList").html(resultHTML);
 	
 }
 
