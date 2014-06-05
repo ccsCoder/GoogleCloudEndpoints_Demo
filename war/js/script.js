@@ -42,6 +42,35 @@ function handleContactSidebarActions(event) {
 	
 }
 
+function deleteContact() {
+	if ($("#contactRemoveForm").css("display")!="none") {
+		$("#contactRemoveForm").slideUp("fast");
+		return;
+	}
+	$("#contactRemoveForm").slideDown("fast");
+	$("#contactRemoveForm #contact_email").focus();
+	$("#contactRemoveForm #deleteContact").off();
+	$("#contactRemoveForm #deleteContact").on("click",function(e) {
+		var searchEmail = $("#contactRemoveForm #contact_email").val();
+		if(!searchEmail || searchEmail==undefined || searchEmail=="") {
+			return;
+		}
+		//Build the Request Object
+	    var requestData = {};
+	    requestData.id = searchEmail;
+	    gapi.client.contactendpoint.removeContact(requestData).execute(function(response) {
+	    	console.debug(response);
+	    	//call method that displays the contacts in a pretty fashion
+	    	displaySearchedContacts(response);
+			$("#contactRemoveForm").fadeOut("fast");
+	    });
+	});
+}
+
+
+/**
+ * function to delete a contact.
+ */
 function searchContact() {
 		if ($("#contactSearchForm").css("display")!="none") {
 			$("#contactSearchForm").slideUp("fast");
