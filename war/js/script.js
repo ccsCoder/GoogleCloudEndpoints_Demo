@@ -37,11 +37,97 @@ function handleContactSidebarActions(event) {
 		updateContact();
 	}
 	else if (event.target.text=="Remove a Contact") {
-		removeContact();
+		deleteContact();
 	}
 	
 }
 
+function updateContact() {
+	if ($("#contactUpdateForm").css("display")!="none") {
+		$("#contactUpdateForm").slideUp("fast");
+		return;
+	}
+	$("#contactUpdateForm").slideDown("fast");
+	$("#contactUpdateForm #contact_email").focus();
+	$("#contactUpdateForm #updateContact").off();
+	$("#contactUpdateForm #updateContact").on("click",function(e) {
+		//First get this contact...
+		//Build the Request Object
+	    var requestData = {};
+	    requestData.id = $("#contactUpdateForm #contact_email").val();
+	    if(!requestData.id || requestData.id==undefined || requestData.id=="")
+	    	return;
+	    gapi.client.contactendpoint.getContact(requestData).execute(function(response) {
+	    	console.debug(response);
+	    	if(response.error || response.error!=undefined) {   		
+	    		showMessage("error","I cannot find anyone with this Email-ID");
+	    		return;
+	    	}
+	    	//Populate the create form with this data...
+	    	populateCreateFormData(response);
+	    	$("#hiddenContactForm").slideDown("slow",function(e) {
+	    		$("#contact_email").attr("disabled","disabled");
+	    	});
+	    	
+	    	//add event to the Cancel thingy.
+	    	$("#hiddenContactForm").find("#cancelContact").off();//remove existing event(s).
+	    	$("#hiddenContactForm").find("#cancelContact").on("click",function(event) {
+	    		$("#hiddenContactForm").slideUp("slow");
+	    	});
+	    	
+	    	//add event to the save thingy
+	    	$("#hiddenContactForm").find("#saveContact").off();//remove existing event(s).
+	    	$("#hiddenContactForm").find("#saveContact").on("click",function(event) {
+	    		saveContactChanges();
+	    	});
+	    });
+	});
+	
+}
+
+/**
+ * method to persist the said changes...
+ */
+function saveContactChanges() {
+	showLoader($("#createNewContactButton"));
+	//Build the Request Object
+    var requestData = {};
+    requestData.emailID = email;
+    requestData.contactName = name;
+    requestData.address = address;
+    requestData.companyName = company;
+    
+    gapi.client.contactendpoint.updateContact(requestData).execute(function(resp) {
+		console.debug(resp);
+		if(resp.message=="javax.persistence.EntityNotFoundException: Object does not exist") {
+			$("#hiddenUpdateForm").hide();
+			showMessage("error","I cannot find anyone with this e-mail ID...");
+		}
+        if (!resp.code) {
+               
+                $("#hiddenUpdateForm").hide();
+                showMessage("success","Saved Successfully!");
+        }
+    });
+    hideLoader();
+}
+
+/**
+ * function to populate the email id being updated on the create form.
+ * @param response
+ */
+function populateCreateFormData(response) {
+	//Set the entries on fields
+    $("#hiddenContactForm #contact_email").val(response.emailID);
+    $("#hiddenContactForm #contact_name").val(response.contactName);
+    $("#hiddenContactForm #contact_company").val(response.company);
+    $("#hiddenContactForm #contact_address").val(response.address);
+    
+    
+}
+/**
+ * function to delete a contact
+ */
 function deleteContact() {
 	if ($("#contactRemoveForm").css("display")!="none") {
 		$("#contactRemoveForm").slideUp("fast");
@@ -60,8 +146,15 @@ function deleteContact() {
 	    requestData.id = searchEmail;
 	    gapi.client.contactendpoint.removeContact(requestData).execute(function(response) {
 	    	console.debug(response);
-	    	//call method that displays the contacts in a pretty fashion
-	    	displaySearchedContacts(response);
+	    	if (!response || response==undefined) {
+	    		showMessage("success","Removed contact with E-Mail:"+searchEmail+" !");
+	    		
+	    	}
+	    	else  {
+	    		showMessage("error","I cannot find a contact with E-Mail:"+searchEmail+" !");
+	    		
+	    	}
+	    	
 			$("#contactRemoveForm").fadeOut("fast");
 	    });
 	});
@@ -69,7 +162,7 @@ function deleteContact() {
 
 
 /**
- * function to delete a contact.
+ * function to search a contact.
  */
 function searchContact() {
 		if ($("#contactSearchForm").css("display")!="none") {
@@ -137,7 +230,9 @@ function createNewContact(event) {
 	
 //	
 }
-
+/**
+ * function to save a contact
+ */
 function saveNewContact () {
 	showLoader($("#createNewContactButton"));
 	//Validate the entries
@@ -159,17 +254,17 @@ function saveNewContact () {
     		console.debug(resp);
     		if(resp.message=="javax.persistence.EntityExistsException: Object already exists") {
     			$("#hiddenContactForm").hide();
-    			$("#hiddenContactMessage").css("color","red").fadeIn("fast").text("A contact with the same E-Mail ID exists...");
+    			showMessage("error","A contact with the same E-Mail ID exists...");
     		}
             if (!resp.code) {
                     //Just logging to console now, you can do your check here/display message
                     console.log(resp.id + ":" + resp.author + ":" + resp.message);
                     $("#hiddenContactForm").hide();
-                    $("#hiddenContactMessage").css("color","green").fadeIn("fast").text("Saved Successfully!");
+                    showMessage("success","Saved Successfully!");
             }
     });
     //request a refresh of all contacts.
-    showAllContacts();
+    //showAllContacts();
     hideLoader();
 
 }
@@ -186,15 +281,19 @@ function showAllContacts(event) {
 	});
 	
 }
-
+/**
+ * function to display some searched contacts...
+ * @param response
+ */
 function displaySearchedContacts(response) {
 	var resultHTML="";
 	if(response.error || response.error!=undefined) {
-		resultHTML="<li>Cannot Find anyone with this Email ID...!</li>";
-		$("#listContactsButton").parent().siblings(".dataList").html(resultHTML);
+		/*resultHTML="<li>Cannot Find anyone with this Email ID...!</li>";
+		$("#listContactsButton").parent().siblings(".dataList").html(resultHTML);*/
+		showMessage("error","It's Lonely here... ! I cannot find anyone !");
 		return;
 	}
-	
+	$(".hiddenMessage").hide();
 	resultHTML+="<li><div class='addressContainer'>" +
 	"<div class='name'>"+response.contactName+" </div>" +
 	"<div class='email'>"+response.emailID+"</div>" +
@@ -206,6 +305,11 @@ function displaySearchedContacts(response) {
 	
 }
 
+function showMessage(type,descr) {
+	
+	$(".hiddenMessage").text(descr).removeClass("sucessMessage").removeClass("errorMessage").addClass(type+"Message").fadeIn("fast");
+}
+
 /**
  * function to display the contacts ( searched ) in a pretty fashion.
  * @param response
@@ -213,18 +317,21 @@ function displaySearchedContacts(response) {
 function displayContacts(response) {
 	var resultHTML="";
 	if(!response.items || response.items==undefined) {
-		resultHTML="<li>No Contacts yet, Why don't you create one?</li>";
+		/*resultHTML="<li>No Contacts yet, Why don't you create one?</li>";*/
+		showMessage("error","It's Lonely here... ! I cannot find anyone !");
+		return;
 	}
-	else {
-		for(var i=0;i<response.items.length;i++) {
-			resultHTML+="<li><div class='addressContainer'>" +
-			"<div class='name'>"+response.items[i].contactName+" </div>" +
-			"<div class='email'>"+response.items[i].emailID+"</div>" +
-			"<div class='companyName'>"	+response.items[i].companyName+"</div>"+
-			"<div class='mailingAddress'>"+response.items[i].address+"</div>" +
-			"</div></li>";
+	
+	$(".hiddenMessage").hide();
+	for(var i=0;i<response.items.length;i++) {
+		resultHTML+="<li><div class='addressContainer'>" +
+		"<div class='name'>"+response.items[i].contactName+" </div>" +
+		"<div class='email'>"+response.items[i].emailID+"</div>" +
+		"<div class='companyName'>"	+response.items[i].companyName+"</div>"+
+		"<div class='mailingAddress'>"+response.items[i].address+"</div>" +
+		"</div></li>";
 			
-		}
 	}
+	
 	$("#listContactsButton").parent().siblings(".dataList").html(resultHTML);
 }

@@ -147,12 +147,15 @@ public class ContactEndpoint {
 	 * It uses HTTP DELETE method.
 	 *
 	 * @param id the primary key of the entity to be deleted.
+	 * @throws UnsupportedEncodingException 
 	 */
 	@ApiMethod(name = "removeContact")
-	public void removeContact(@Named("id") String id) {
+	public void removeContact(@Named("id") String id) throws UnsupportedEncodingException {
 		PersistenceManager mgr = getPersistenceManager();
 		try {
-			Contact contact = mgr.getObjectById(Contact.class, id);
+			System.out.println("Deletion...*id="+id+" After Decoding="+URLDecoder.decode(id, "UTF-8"));
+			Key key = KeyFactory.createKey(Contact.class.getSimpleName(), URLDecoder.decode(id, "UTF-8"));
+			Contact contact = mgr.getObjectById(Contact.class, KeyFactory.keyToString(key));
 			mgr.deletePersistent(contact);
 		} finally {
 			mgr.close();
@@ -163,10 +166,17 @@ public class ContactEndpoint {
 		PersistenceManager mgr = getPersistenceManager();
 		boolean contains = true;
 		try {
+			//Key key = KeyFactory.createKey(Contact.class.getSimpleName(), URLDecoder.decode(contact.getEmailID(), "UTF-8"));
+			/*mgr.getObjectById(Contact.class, KeyFactory.keyToString(key));*/
 			mgr.getObjectById(Contact.class, contact.getEmailID());
 		} catch (javax.jdo.JDOObjectNotFoundException ex) {
 			contains = false;
-		} finally {
+		} 
+		/*catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}*/ 
+		finally {
 			mgr.close();
 		}
 		return contains;
