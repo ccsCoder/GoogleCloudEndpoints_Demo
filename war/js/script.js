@@ -91,6 +91,12 @@ function updateContact() {
 function saveContactChanges() {
 	showLoader($("#createNewContactButton"));
 	//Build the Request Object
+	//Validate the entries
+    var email = $("#contact_email").val();
+    var name = $("#contact_name").val();
+    var company = $("#contact_company").val();
+    var address = $("#contact_address").val();
+    
     var requestData = {};
     requestData.emailID = email;
     requestData.contactName = name;

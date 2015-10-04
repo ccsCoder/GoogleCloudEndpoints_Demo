@@ -1,0 +1,290 @@
+{
+ "kind": "discovery#rpcDescription",
+ "etag": "\"u_zXkMELIlX4ktyNbM2XKD4vK8E/5Q7tibav70dW0MzqGGB3WA0Ay5Q\"",
+ "discoveryVersion": "v1",
+ "id": "billendpoint:v1",
+ "name": "billendpoint",
+ "version": "v1",
+ "description": "This is an API",
+ "ownerDomain": "tfl.com",
+ "ownerName": "tfl.com",
+ "packagePath": "entity",
+ "icons": {
+  "x16": "http://www.google.com/images/icons/product/search-16.gif",
+  "x32": "http://www.google.com/images/icons/product/search-32.gif"
+ },
+ "protocol": "rpc",
+ "rootUrl": "https://BillGen.appspot.com/_ah/api/",
+ "rpcUrl": "https://BillGen.appspot.com/_ah/api/rpc",
+ "rpcPath": "/_ah/api/rpc",
+ "parameters": {
+  "alt": {
+   "type": "string",
+   "description": "Data format for the response.",
+   "default": "json",
+   "enum": [
+    "json"
+   ],
+   "enumDescriptions": [
+    "Responses with Content-Type of application/json"
+   ],
+   "location": "query"
+  },
+  "fields": {
+   "type": "string",
+   "description": "Selector specifying which fields to include in a partial response.",
+   "location": "query"
+  },
+  "key": {
+   "type": "string",
+   "description": "API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.",
+   "location": "query"
+  },
+  "oauth_token": {
+   "type": "string",
+   "description": "OAuth 2.0 token for the current user.",
+   "location": "query"
+  },
+  "prettyPrint": {
+   "type": "boolean",
+   "description": "Returns response with indentations and line breaks.",
+   "default": "true",
+   "location": "query"
+  },
+  "quotaUser": {
+   "type": "string",
+   "description": "Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.",
+   "location": "query"
+  },
+  "userIp": {
+   "type": "string",
+   "description": "IP address of the site where the request originates. Use this if you want to enforce per-user limits.",
+   "location": "query"
+  }
+ },
+ "auth": {
+  "oauth2": {
+   "scopes": {
+    "https://www.googleapis.com/auth/userinfo.email": {
+     "description": "View your email address"
+    }
+   }
+  }
+ },
+ "schemas": {
+  "Bill": {
+   "id": "Bill",
+   "type": "object",
+   "properties": {
+    "billDate": {
+     "type": "string"
+    },
+    "billGeneratedBy": {
+     "type": "string"
+    },
+    "contact": {
+     "$ref": "Contact"
+    },
+    "finalAmount": {
+     "type": "number",
+     "format": "double"
+    },
+    "jobDescription": {
+     "type": "string"
+    },
+    "key": {
+     "$ref": "Key"
+    },
+    "numberOfHours": {
+     "type": "integer",
+     "format": "int32"
+    },
+    "payableTo": {
+     "type": "string"
+    },
+    "rate": {
+     "$ref": "Rates"
+    }
+   }
+  },
+  "CollectionResponse_Bill": {
+   "id": "CollectionResponse_Bill",
+   "type": "object",
+   "properties": {
+    "items": {
+     "type": "array",
+     "items": {
+      "$ref": "Bill"
+     }
+    },
+    "nextPageToken": {
+     "type": "string"
+    }
+   }
+  },
+  "Contact": {
+   "id": "Contact",
+   "type": "object",
+   "properties": {
+    "address": {
+     "type": "string"
+    },
+    "companyName": {
+     "type": "string"
+    },
+    "contactName": {
+     "type": "string"
+    },
+    "emailID": {
+     "type": "string"
+    }
+   }
+  },
+  "Key": {
+   "id": "Key",
+   "type": "object",
+   "properties": {
+    "appId": {
+     "type": "string"
+    },
+    "complete": {
+     "type": "boolean"
+    },
+    "id": {
+     "type": "string",
+     "format": "int64"
+    },
+    "kind": {
+     "type": "string"
+    },
+    "name": {
+     "type": "string"
+    },
+    "namespace": {
+     "type": "string"
+    },
+    "parent": {
+     "$ref": "Key"
+    }
+   }
+  },
+  "Rates": {
+   "id": "Rates",
+   "type": "object",
+   "properties": {
+    "conversionRate": {
+     "type": "number",
+     "format": "double"
+    },
+    "customerCurrencyCode": {
+     "type": "string"
+    },
+    "hourlyRate": {
+     "type": "number",
+     "format": "double"
+    },
+    "nativeCurrencyCode": {
+     "type": "string"
+    },
+    "rateType": {
+     "type": "string"
+    },
+    "taxPercentage": {
+     "type": "number",
+     "format": "double"
+    }
+   }
+  }
+ },
+ "methods": {
+  "billendpoint.getBill": {
+   "id": "billendpoint.getBill",
+   "allowGet": true,
+   "parameters": {
+    "id": {
+     "type": "string",
+     "required": true,
+     "format": "int64"
+    }
+   },
+   "parameterOrder": [
+    "id"
+   ],
+   "returns": {
+    "$ref": "Bill"
+   },
+   "scopes": [
+    "https://www.googleapis.com/auth/userinfo.email"
+   ]
+  },
+  "billendpoint.insertBill": {
+   "id": "billendpoint.insertBill",
+   "parameters": {
+    "resource": {
+     "$ref": "Bill"
+    }
+   },
+   "parameterOrder": [
+    "resource"
+   ],
+   "returns": {
+    "$ref": "Bill"
+   },
+   "scopes": [
+    "https://www.googleapis.com/auth/userinfo.email"
+   ]
+  },
+  "billendpoint.listBill": {
+   "id": "billendpoint.listBill",
+   "allowGet": true,
+   "parameters": {
+    "cursor": {
+     "type": "string"
+    },
+    "limit": {
+     "type": "integer",
+     "format": "int32"
+    }
+   },
+   "returns": {
+    "$ref": "CollectionResponse_Bill"
+   },
+   "scopes": [
+    "https://www.googleapis.com/auth/userinfo.email"
+   ]
+  },
+  "billendpoint.removeBill": {
+   "id": "billendpoint.removeBill",
+   "parameters": {
+    "id": {
+     "type": "string",
+     "required": true,
+     "format": "int64"
+    }
+   },
+   "parameterOrder": [
+    "id"
+   ],
+   "scopes": [
+    "https://www.googleapis.com/auth/userinfo.email"
+   ]
+  },
+  "billendpoint.updateBill": {
+   "id": "billendpoint.updateBill",
+   "parameters": {
+    "resource": {
+     "$ref": "Bill"
+    }
+   },
+   "parameterOrder": [
+    "resource"
+   ],
+   "returns": {
+    "$ref": "Bill"
+   },
+   "scopes": [
+    "https://www.googleapis.com/auth/userinfo.email"
+   ]
+  }
+ }
+}

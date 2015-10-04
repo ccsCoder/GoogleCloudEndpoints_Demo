@@ -7,7 +7,6 @@ import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
 import com.google.appengine.api.datastore.Key;
-import com.google.appengine.datanucleus.annotations.Unowned;
 
 @PersistenceCapable(identityType=IdentityType.APPLICATION)
 public class Bill {
@@ -30,10 +29,10 @@ public class Bill {
 	private String billDate;
 	
 	@Persistent(defaultFetchGroup="true")
-	@Unowned
+//	@Unowned
 	private Contact contact;
 	@Persistent(defaultFetchGroup="true")
-	@Unowned
+//	@Unowned
 	private Rates rate;
 	
 	

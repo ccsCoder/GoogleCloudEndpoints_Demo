@@ -1,12 +1,12 @@
 {
   "extends" : "thirdParty.api",
   "abstract" : false,
-  "root" : "https://BillGen.appspot.com/_ah/api",
+  "root" : "https://ccscoder-cloud-endpoint.appspot.com/_ah/api",
   "name" : "billendpoint",
   "version" : "v1",
   "defaultVersion" : false,
   "adapter" : {
-    "bns" : "https://BillGen.appspot.com/_ah/spi",
+    "bns" : "https://ccscoder-cloud-endpoint.appspot.com/_ah/spi",
     "deadline" : 65.0,
     "type" : "lily"
   },
@@ -27,22 +27,6 @@
   "ownerName" : "tfl.com",
   "packagePath" : "entity",
   "methods" : {
-    "billendpoint.updateBill" : {
-      "path" : "bill",
-      "httpMethod" : "PUT",
-      "authLevel" : "NONE",
-      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
-      "audiences" : [ ],
-      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "com.tfl.entity.BillEndpoint.updateBill",
-      "request" : {
-        "body" : "autoTemplate(backendRequest)",
-        "bodyName" : "resource"
-      },
-      "response" : {
-        "body" : "autoTemplate(backendResponse)"
-      }
-    },
     "billendpoint.listBill" : {
       "path" : "bill",
       "httpMethod" : "GET",
@@ -68,43 +52,6 @@
         "body" : "autoTemplate(backendResponse)"
       }
     },
-    "billendpoint.removeBill" : {
-      "path" : "bill/{id}",
-      "httpMethod" : "DELETE",
-      "authLevel" : "NONE",
-      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
-      "audiences" : [ ],
-      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "com.tfl.entity.BillEndpoint.removeBill",
-      "request" : {
-        "parameters" : {
-          "id" : {
-            "type" : "int64",
-            "required" : true
-          }
-        },
-        "body" : "empty"
-      },
-      "response" : {
-        "body" : "empty"
-      }
-    },
-    "billendpoint.insertBill" : {
-      "path" : "bill",
-      "httpMethod" : "POST",
-      "authLevel" : "NONE",
-      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
-      "audiences" : [ ],
-      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "com.tfl.entity.BillEndpoint.insertBill",
-      "request" : {
-        "body" : "autoTemplate(backendRequest)",
-        "bodyName" : "resource"
-      },
-      "response" : {
-        "body" : "autoTemplate(backendResponse)"
-      }
-    },
     "billendpoint.getBill" : {
       "path" : "bill/{id}",
       "httpMethod" : "GET",
@@ -125,10 +72,78 @@
       "response" : {
         "body" : "autoTemplate(backendResponse)"
       }
+    },
+    "billendpoint.insertBill" : {
+      "path" : "bill",
+      "httpMethod" : "POST",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.tfl.entity.BillEndpoint.insertBill",
+      "request" : {
+        "body" : "autoTemplate(backendRequest)",
+        "bodyName" : "resource"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
+    "billendpoint.updateBill" : {
+      "path" : "bill",
+      "httpMethod" : "PUT",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.tfl.entity.BillEndpoint.updateBill",
+      "request" : {
+        "body" : "autoTemplate(backendRequest)",
+        "bodyName" : "resource"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
+    "billendpoint.removeBill" : {
+      "path" : "bill/{id}",
+      "httpMethod" : "DELETE",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.tfl.entity.BillEndpoint.removeBill",
+      "request" : {
+        "parameters" : {
+          "id" : {
+            "type" : "int64",
+            "required" : true
+          }
+        },
+        "body" : "empty"
+      },
+      "response" : {
+        "body" : "empty"
+      }
     }
   },
   "descriptor" : {
     "schemas" : {
+      "CollectionResponse_Bill" : {
+        "id" : "CollectionResponse_Bill",
+        "type" : "object",
+        "properties" : {
+          "items" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "Bill"
+            }
+          },
+          "nextPageToken" : {
+            "type" : "string"
+          }
+        }
+      },
       "Bill" : {
         "id" : "Bill",
         "type" : "object",
@@ -179,14 +194,14 @@
           "name" : {
             "type" : "string"
           },
-          "parent" : {
-            "$ref" : "Key"
+          "namespace" : {
+            "type" : "string"
           },
           "complete" : {
             "type" : "boolean"
           },
-          "namespace" : {
-            "type" : "string"
+          "parent" : {
+            "$ref" : "Key"
           }
         }
       },
@@ -231,38 +246,18 @@
             "type" : "number"
           }
         }
-      },
-      "CollectionResponse_Bill" : {
-        "id" : "CollectionResponse_Bill",
-        "type" : "object",
-        "properties" : {
-          "items" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "Bill"
-            }
-          },
-          "nextPageToken" : {
-            "type" : "string"
-          }
-        }
       }
     },
     "methods" : {
-      "com.tfl.entity.BillEndpoint.updateBill" : {
-        "request" : {
-          "$ref" : "Bill"
-        },
-        "response" : {
-          "$ref" : "Bill"
-        }
-      },
       "com.tfl.entity.BillEndpoint.listBill" : {
         "response" : {
           "$ref" : "CollectionResponse_Bill"
         }
       },
-      "com.tfl.entity.BillEndpoint.removeBill" : {
+      "com.tfl.entity.BillEndpoint.getBill" : {
+        "response" : {
+          "$ref" : "Bill"
+        }
       },
       "com.tfl.entity.BillEndpoint.insertBill" : {
         "request" : {
@@ -272,10 +267,15 @@
           "$ref" : "Bill"
         }
       },
-      "com.tfl.entity.BillEndpoint.getBill" : {
+      "com.tfl.entity.BillEndpoint.updateBill" : {
+        "request" : {
+          "$ref" : "Bill"
+        },
         "response" : {
           "$ref" : "Bill"
         }
+      },
+      "com.tfl.entity.BillEndpoint.removeBill" : {
       }
     }
   }

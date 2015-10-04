@@ -1,12 +1,12 @@
 {
   "extends" : "thirdParty.api",
   "abstract" : false,
-  "root" : "https://BillGen.appspot.com/_ah/api",
+  "root" : "https://ccscoder-cloud-endpoint.appspot.com/_ah/api",
   "name" : "contactendpoint",
   "version" : "v1",
   "defaultVersion" : false,
   "adapter" : {
-    "bns" : "https://BillGen.appspot.com/_ah/spi",
+    "bns" : "https://ccscoder-cloud-endpoint.appspot.com/_ah/spi",
     "deadline" : 65.0,
     "type" : "lily"
   },
@@ -27,17 +27,47 @@
   "ownerName" : "tfl.com",
   "packagePath" : "entity",
   "methods" : {
-    "contactendpoint.updateContact" : {
+    "contactendpoint.listContact" : {
       "path" : "contact",
-      "httpMethod" : "PUT",
+      "httpMethod" : "GET",
       "authLevel" : "NONE",
       "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
       "audiences" : [ ],
       "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "com.tfl.entity.ContactEndpoint.updateContact",
+      "rosyMethod" : "com.tfl.entity.ContactEndpoint.listContact",
       "request" : {
-        "body" : "autoTemplate(backendRequest)",
-        "bodyName" : "resource"
+        "parameters" : {
+          "cursor" : {
+            "type" : "string",
+            "required" : false
+          },
+          "limit" : {
+            "type" : "int32",
+            "required" : false
+          }
+        },
+        "body" : "empty"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
+    "contactendpoint.getContact" : {
+      "path" : "contact/{id}",
+      "httpMethod" : "GET",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.tfl.entity.ContactEndpoint.getContact",
+      "request" : {
+        "parameters" : {
+          "id" : {
+            "type" : "string",
+            "required" : true
+          }
+        },
+        "body" : "empty"
       },
       "response" : {
         "body" : "autoTemplate(backendResponse)"
@@ -51,6 +81,22 @@
       "audiences" : [ ],
       "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
       "rosyMethod" : "com.tfl.entity.ContactEndpoint.insertContact",
+      "request" : {
+        "body" : "autoTemplate(backendRequest)",
+        "bodyName" : "resource"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
+    "contactendpoint.updateContact" : {
+      "path" : "contact",
+      "httpMethod" : "PUT",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.tfl.entity.ContactEndpoint.updateContact",
       "request" : {
         "body" : "autoTemplate(backendRequest)",
         "bodyName" : "resource"
@@ -79,56 +125,25 @@
       "response" : {
         "body" : "empty"
       }
-    },
-    "contactendpoint.getContact" : {
-      "path" : "contact/{id}",
-      "httpMethod" : "GET",
-      "authLevel" : "NONE",
-      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
-      "audiences" : [ ],
-      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "com.tfl.entity.ContactEndpoint.getContact",
-      "request" : {
-        "parameters" : {
-          "id" : {
-            "type" : "string",
-            "required" : true
-          }
-        },
-        "body" : "empty"
-      },
-      "response" : {
-        "body" : "autoTemplate(backendResponse)"
-      }
-    },
-    "contactendpoint.listContact" : {
-      "path" : "contact",
-      "httpMethod" : "GET",
-      "authLevel" : "NONE",
-      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
-      "audiences" : [ ],
-      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "com.tfl.entity.ContactEndpoint.listContact",
-      "request" : {
-        "parameters" : {
-          "cursor" : {
-            "type" : "string",
-            "required" : false
-          },
-          "limit" : {
-            "type" : "int32",
-            "required" : false
-          }
-        },
-        "body" : "empty"
-      },
-      "response" : {
-        "body" : "autoTemplate(backendResponse)"
-      }
     }
   },
   "descriptor" : {
     "schemas" : {
+      "CollectionResponse_Contact" : {
+        "id" : "CollectionResponse_Contact",
+        "type" : "object",
+        "properties" : {
+          "items" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "Contact"
+            }
+          },
+          "nextPageToken" : {
+            "type" : "string"
+          }
+        }
+      },
       "Contact" : {
         "id" : "Contact",
         "type" : "object",
@@ -146,28 +161,15 @@
             "type" : "string"
           }
         }
-      },
-      "CollectionResponse_Contact" : {
-        "id" : "CollectionResponse_Contact",
-        "type" : "object",
-        "properties" : {
-          "items" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "Contact"
-            }
-          },
-          "nextPageToken" : {
-            "type" : "string"
-          }
-        }
       }
     },
     "methods" : {
-      "com.tfl.entity.ContactEndpoint.updateContact" : {
-        "request" : {
-          "$ref" : "Contact"
-        },
+      "com.tfl.entity.ContactEndpoint.listContact" : {
+        "response" : {
+          "$ref" : "CollectionResponse_Contact"
+        }
+      },
+      "com.tfl.entity.ContactEndpoint.getContact" : {
         "response" : {
           "$ref" : "Contact"
         }
@@ -180,17 +182,15 @@
           "$ref" : "Contact"
         }
       },
-      "com.tfl.entity.ContactEndpoint.removeContact" : {
-      },
-      "com.tfl.entity.ContactEndpoint.getContact" : {
+      "com.tfl.entity.ContactEndpoint.updateContact" : {
+        "request" : {
+          "$ref" : "Contact"
+        },
         "response" : {
           "$ref" : "Contact"
         }
       },
-      "com.tfl.entity.ContactEndpoint.listContact" : {
-        "response" : {
-          "$ref" : "CollectionResponse_Contact"
-        }
+      "com.tfl.entity.ContactEndpoint.removeContact" : {
       }
     }
   }

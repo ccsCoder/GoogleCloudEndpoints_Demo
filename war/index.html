@@ -1,27 +1,111 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<!-- The HTML 4.01 Transitional DOCTYPE declaration-->
-<!-- above set at the top of the file will set     -->
-<!-- the browser's rendering engine into           -->
-<!-- "Quirks Mode". Replacing this declaration     -->
-<!-- with a "Standards Mode" doctype is supported, -->
-<!-- but may lead to some differences in layout.   -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
-<html>
-  <head>
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-    <title>Hello App Engine</title>
-  </head>
-
-  <body>
-    <h1>Hello App Engine!</h1>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>ccsCoder's Cloud Endpoints CRUD Demo</title>
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<link href="style.css" rel="stylesheet" type="text/css" media="screen" />
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/script.js"></script>
+</head>
+<body>
+	<div id="logo">
+		<h1><a href="#">ccsCoder's Google Clound Endpoints Demo</a></h1>
+		<p><em> -- a submodule of <a href="ccsCoder.github.io">ccscoder.github.io</a></em></p>
+	</div>
+	<hr />
+	<!-- end #logo -->
+	<div id="header">
+		<div id="menu">
+			<ul>
+				<li><a href="contacts.html" class="first current_page_item">Contacts</a></li>
+				<li><a href="rates.html">Rates</a></li>
+				<li><a href="bills.html">Bills</a></li>
+				
+			</ul>
+		</div>
+		<!-- end #menu -->
+		
+	</div>
+	<!-- end #header -->
+	<!-- end #header-wrapper -->
+	<div id="page">
+		<div id="content">
+		  <div class="post">
+				<h2 class="title"><a href="#">Contacts </a></h2>
+				<p class="meta"><em>List/Create/Modify your contacts...</em></p>
+				<div class="entry">
+					<div class="container">
+						<span id="listContactsButton" class="myButton">List all Contacts &Gt;</span>
+					</div>
+					<p></p>
+					<ul class="dataList">
+					</ul>
+					<p>Or Optionally you may want to ...</p>
+					<div class="container">
+						<span id="createNewContactButton" class="myButton">Create a New Contact &Gt;</span>
+					</div>
+					<div class="hiddenForm" id="hiddenContactForm">
+						<div><input type="email" id="contact_email" placeholder="email address"/> </div>
+						<div><input type="text" id="contact_name" placeholder="Name"/> </div>
+						<div><input type="text" id="contact_company" placeholder="Company Name"/> </div>
+						<div><input type="text" id="contact_address" placeholder="Mailing Address"/> </div>
+						<div style="float:right;margin-top:5px">
+							<button type="button" id="saveContact" class="myButton" ">Save</button>
+							<button type="button" id="cancelContact" class="myButton" >Cancel</button>
+						</div>
+					</div>
+					<div class="hiddenMessage" id="hiddenContactMessage">
+					</div>
+			</div>
+		  </div>
+			
+		</div><!-- end #content -->
+		<div id="sidebar">
+			<ul>
+				<li>
+					<h2>Quick Links</h2>
+					<p>Use the Menu Options below for quick access to tasks...</p>
+				</li>
+				<li>
+					<h2>Contacts</h2>
+					<ul id="contactSidebar">
+						<li><a>View All Contacts</a></li>
+						<li><a>Search for a Contact</a></li>
+						<li id="contactSearchForm" style="display:none">
+							<input type="email" id="contact_email" placeholder="email address"/>
+							<span id="searchContact" class="myButton">Go</span>
+							
+						</li>
+						<li><a>Edit a Contact</a></li>
+						<li id="contactUpdateForm" style="display:none">
+							<input type="email" id="contact_email" placeholder="email address"/>
+							<span id="updateContact" class="myButton">Go</span>
+						</li>
+						<li><a>Remove a Contact</a></li>
+						<li id="contactRemoveForm" style="display:none">
+							<input type="email" id="contact_email" placeholder="email address"/>
+							<span id="deleteContact" class="myButton">Ok</span>
+						</li>
+					</ul>
+					
+				</li>
+				
+				
+				
+			</ul>
+		</div>
+		<!-- end #sidebar -->
+		<div style="clear: both;">&nbsp;</div>
+	</div>
+	<!-- end #page -->
+	<div id="footer">
+		<p>Copyright (c) 2014 www.technoflairlab.com All rights reserved. With Thanks, template from: <a href="http://www.freecsstemplates.org">FCT</a>.</p>
+	</div>
+	<!-- end #footer -->
+	<script type="text/javascript" src="https://apis.google.com/js/client.js?onload=init"></script>
 	
-    <table>
-      <tr>
-        <td colspan="2" style="font-weight:bold;">Available Servlets:</td>        
-      </tr>
-      <tr>
-        <td><a href="billgenerator">BillGenerator</a></td>
-      </tr>
-    </table>
-  </body>
+</body>
 </html>

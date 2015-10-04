@@ -1,12 +1,12 @@
 {
   "extends" : "thirdParty.api",
   "abstract" : false,
-  "root" : "https://BillGen.appspot.com/_ah/api",
+  "root" : "https://ccscoder-cloud-endpoint.appspot.com/_ah/api",
   "name" : "ratesendpoint",
   "version" : "v1",
   "defaultVersion" : false,
   "adapter" : {
-    "bns" : "https://BillGen.appspot.com/_ah/spi",
+    "bns" : "https://ccscoder-cloud-endpoint.appspot.com/_ah/spi",
     "deadline" : 65.0,
     "type" : "lily"
   },
@@ -27,48 +27,6 @@
   "ownerName" : "tfl.com",
   "packagePath" : "entity",
   "methods" : {
-    "ratesendpoint.removeRates" : {
-      "path" : "rates/{id}",
-      "httpMethod" : "DELETE",
-      "authLevel" : "NONE",
-      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
-      "audiences" : [ ],
-      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "com.tfl.entity.RatesEndpoint.removeRates",
-      "request" : {
-        "parameters" : {
-          "id" : {
-            "type" : "string",
-            "required" : true
-          }
-        },
-        "body" : "empty"
-      },
-      "response" : {
-        "body" : "empty"
-      }
-    },
-    "ratesendpoint.getRates" : {
-      "path" : "rates/{id}",
-      "httpMethod" : "GET",
-      "authLevel" : "NONE",
-      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
-      "audiences" : [ ],
-      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
-      "rosyMethod" : "com.tfl.entity.RatesEndpoint.getRates",
-      "request" : {
-        "parameters" : {
-          "id" : {
-            "type" : "string",
-            "required" : true
-          }
-        },
-        "body" : "empty"
-      },
-      "response" : {
-        "body" : "autoTemplate(backendResponse)"
-      }
-    },
     "ratesendpoint.listRates" : {
       "path" : "rates",
       "httpMethod" : "GET",
@@ -86,6 +44,27 @@
           "limit" : {
             "type" : "int32",
             "required" : false
+          }
+        },
+        "body" : "empty"
+      },
+      "response" : {
+        "body" : "autoTemplate(backendResponse)"
+      }
+    },
+    "ratesendpoint.getRates" : {
+      "path" : "rates/{id}",
+      "httpMethod" : "GET",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.tfl.entity.RatesEndpoint.getRates",
+      "request" : {
+        "parameters" : {
+          "id" : {
+            "type" : "string",
+            "required" : true
           }
         },
         "body" : "empty"
@@ -125,10 +104,46 @@
       "response" : {
         "body" : "autoTemplate(backendResponse)"
       }
+    },
+    "ratesendpoint.removeRates" : {
+      "path" : "rates/{id}",
+      "httpMethod" : "DELETE",
+      "authLevel" : "NONE",
+      "scopes" : [ "https://www.googleapis.com/auth/userinfo.email" ],
+      "audiences" : [ ],
+      "clientIds" : [ "292824132082.apps.googleusercontent.com" ],
+      "rosyMethod" : "com.tfl.entity.RatesEndpoint.removeRates",
+      "request" : {
+        "parameters" : {
+          "id" : {
+            "type" : "string",
+            "required" : true
+          }
+        },
+        "body" : "empty"
+      },
+      "response" : {
+        "body" : "empty"
+      }
     }
   },
   "descriptor" : {
     "schemas" : {
+      "CollectionResponse_Rates" : {
+        "id" : "CollectionResponse_Rates",
+        "type" : "object",
+        "properties" : {
+          "items" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "Rates"
+            }
+          },
+          "nextPageToken" : {
+            "type" : "string"
+          }
+        }
+      },
       "Rates" : {
         "id" : "Rates",
         "type" : "object",
@@ -152,34 +167,17 @@
             "type" : "number"
           }
         }
-      },
-      "CollectionResponse_Rates" : {
-        "id" : "CollectionResponse_Rates",
-        "type" : "object",
-        "properties" : {
-          "items" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "Rates"
-            }
-          },
-          "nextPageToken" : {
-            "type" : "string"
-          }
-        }
       }
     },
     "methods" : {
-      "com.tfl.entity.RatesEndpoint.removeRates" : {
+      "com.tfl.entity.RatesEndpoint.listRates" : {
+        "response" : {
+          "$ref" : "CollectionResponse_Rates"
+        }
       },
       "com.tfl.entity.RatesEndpoint.getRates" : {
         "response" : {
           "$ref" : "Rates"
-        }
-      },
-      "com.tfl.entity.RatesEndpoint.listRates" : {
-        "response" : {
-          "$ref" : "CollectionResponse_Rates"
         }
       },
       "com.tfl.entity.RatesEndpoint.insertRates" : {
@@ -197,6 +195,8 @@
         "response" : {
           "$ref" : "Rates"
         }
+      },
+      "com.tfl.entity.RatesEndpoint.removeRates" : {
       }
     }
   }
